@@ -1,0 +1,172 @@
+
+
+<html lang="de">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Anamnese App
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+     const form = document.getElementById('anamnese-form');
+     const diagnosisSection = document.getElementById('diagnosis-section');
+     const diagnosisList = document.getElementById('diagnosis-list');
+
+     form.addEventListener('submit', function(event) {
+       event.preventDefault();
+
+       const name = document.getElementById('name').value;
+       const age = document.getElementById('age').value;
+       const symptoms = document.getElementById('symptoms').value.toLowerCase();
+
+       // Simple diagnosis logic based on symptoms
+       let diagnoses = [];
+       if (symptoms.includes('fieber') || symptoms.includes('husten') || symptoms.includes('kopfschmerzen')) {
+         diagnoses.push({
+           title: 'Grippe',
+           description: 'Mögliche Grippe. Empfohlene Maßnahmen: Ruhe, viel Flüssigkeit, und ggf. Fiebersenker.'
+         });
+       }
+       if (symptoms.includes('husten') || symptoms.includes('schnupfen') || symptoms.includes('halsschmerzen')) {
+         diagnoses.push({
+           title: 'Erkältung',
+           description: 'Mögliche Erkältung. Empfohlene Maßnahmen: Ruhe, viel Flüssigkeit, und ggf. Hustenstiller.'
+         });
+       }
+       if (symptoms.includes('kopfschmerzen') || symptoms.includes('übelkeit') || symptoms.includes('lichtempfindlichkeit')) {
+         diagnoses.push({
+           title: 'Migräne',
+           description: 'Mögliche Migräne. Empfohlene Maßnahmen: Ruhe, Dunkelheit, und ggf. Schmerzmittel.'
+         });
+       }
+       if (symptoms.includes('bauchschmerzen') || symptoms.includes('durchfall') || symptoms.includes('übelkeit')) {
+         diagnoses.push({
+           title: 'Magen-Darm-Infekt',
+           description: 'Möglicher Magen-Darm-Infekt. Empfohlene Maßnahmen: Ruhe, viel Flüssigkeit, und leichte Kost.'
+         });
+       }
+       if (symptoms.includes('atemnot') || symptoms.includes('brustschmerzen') || symptoms.includes('husten')) {
+         diagnoses.push({
+           title: 'Lungenentzündung',
+           description: 'Mögliche Lungenentzündung. Empfohlene Maßnahmen: Arztbesuch, ggf. Antibiotika.'
+         });
+       }
+       if (symptoms.includes('juckreiz') || symptoms.includes('ausschlag') || symptoms.includes('schwellung')) {
+         diagnoses.push({
+           title: 'Allergie',
+           description: 'Mögliche Allergie. Empfohlene Maßnahmen: Allergietest, Antihistaminika.'
+         });
+       }
+       if (symptoms.includes('schwindel') || symptoms.includes('ohnmacht') || symptoms.includes('herzrasen')) {
+         diagnoses.push({
+           title: 'Herz-Kreislauf-Probleme',
+           description: 'Mögliche Herz-Kreislauf-Probleme. Empfohlene Maßnahmen: Arztbesuch, ggf. EKG.'
+         });
+       }
+
+       // Clear previous diagnoses
+       diagnosisList.innerHTML = '';
+
+       // Display new diagnoses
+       diagnoses.forEach(diagnosis => {
+         const diagnosisItem = document.createElement('div');
+         diagnosisItem.classList.add('flex', 'items-center', 'mb-4');
+         diagnosisItem.innerHTML = `
+           <img alt="Icon eines Doktors mit Stethoskop" class="w-12 h-12 mr-4" src="https://placehold.co/50x50" />
+           <div>
+             <h3 class="text-lg font-semibold">${diagnosis.title}</h3>
+             <p class="text-gray-700">${diagnosis.description}</p>
+           </div>
+         `;
+         diagnosisList.appendChild(diagnosisItem);
+       });
+
+       // Show the diagnosis section
+       diagnosisSection.classList.remove('hidden');
+     });
+   });
+  </script>
+ </head>
+ <body class="font-roboto bg-gray-100">
+  <header class="bg-blue-600 text-white p-4">
+   <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-2xl font-bold">
+     Anamnese App
+    </h1>
+    <nav>
+     <ul class="flex space-x-4">
+      <li>
+       <a class="hover:underline" href="#">
+        Home
+       </a>
+      </li>
+      <li>
+       <a class="hover:underline" href="#">
+        Anamnese Bogen
+       </a>
+      </li>
+      <li>
+       <a class="hover:underline" href="#">
+        Diagnose
+       </a>
+      </li>
+      <li>
+       <a class="hover:underline" href="#">
+        Kontakt
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <main class="container mx-auto p-4">
+   <section class="bg-white p-6 rounded shadow-md mb-6">
+    <h2 class="text-xl font-bold mb-4">
+     Anamnese Bogen
+    </h2>
+    <form class="space-y-4" id="anamnese-form">
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="name">
+       Name
+      </label>
+      <input class="mt-1 block w-full p-2 border border-gray-300 rounded-md" id="name" type="text"/>
+     </div>
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="age">
+       Alter
+      </label>
+      <input class="mt-1 block w-full p-2 border border-gray-300 rounded-md" id="age" type="number"/>
+     </div>
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="symptoms">
+       Symptome
+      </label>
+      <textarea class="mt-1 block w-full p-2 border border-gray-300 rounded-md" id="symptoms" rows="4"></textarea>
+     </div>
+     <button class="bg-blue-600 text-white px-4 py-2 rounded-md" type="submit">
+      Absenden
+     </button>
+    </form>
+   </section>
+   <section class="bg-white p-6 rounded shadow-md hidden" id="diagnosis-section">
+    <h2 class="text-xl font-bold mb-4">
+     Vorläufige Verdachtsdiagnose
+    </h2>
+    <div class="space-y-4" id="diagnosis-list">
+    </div>
+   </section>
+  </main>
+  <footer class="bg-blue-600 text-white p-4 mt-6">
+   <div class="container mx-auto text-center">
+    <p>
+     © 2023 Anamnese App. Alle Rechte vorbehalten.
+    </p>
+   </div>
+  </footer>
+ </body>
+</html>
